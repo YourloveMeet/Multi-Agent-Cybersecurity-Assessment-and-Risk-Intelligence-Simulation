@@ -1,0 +1,110 @@
+{
+  "target": {
+    "host": "acme-demo.local",
+    "mode": "simulation",
+    "profile": "standard",
+    "authorized": true
+  },
+  "dns": {
+    "resolved": true,
+    "ip_addresses": ["198.51.100.42", "198.51.100.43"],
+    "canonical_name": "acme-demo.local",
+    "response_time_ms": 14
+  },
+  "assets": [
+    {
+      "id": "AST-001",
+      "name": "Public Web Server",
+      "asset_type": "web-server",
+      "host": "acme-demo.local",
+      "port": 443,
+      "exposure": "internet",
+      "environment": "production",
+      "criticality": "high",
+      "criticality_score": 8,
+      "description": "Primary customer-facing web portal"
+    },
+    {
+      "id": "AST-002",
+      "name": "Authentication Service",
+      "asset_type": "auth-service",
+      "host": "auth.acme-demo.local",
+      "port": 8443,
+      "exposure": "internet",
+      "environment": "production",
+      "criticality": "critical",
+      "criticality_score": 9,
+      "description": "Customer OAuth2/OIDC identity provider"
+    },
+    {
+      "id": "AST-003",
+      "name": "Internal Admin Service",
+      "asset_type": "admin-portal",
+      "host": "acme-demo.local",
+      "port": 8080,
+      "exposure": "internet",
+      "environment": "production",
+      "criticality": "critical",
+      "criticality_score": 10,
+      "description": "Administrative management dashboard exposed without network restriction"
+    },
+    {
+      "id": "AST-004",
+      "name": "Legacy API Server",
+      "asset_type": "api",
+      "host": "acme-demo.local",
+      "port": 80,
+      "exposure": "internet",
+      "environment": "production",
+      "criticality": "medium",
+      "criticality_score": 6,
+      "description": "Unencrypted HTTP endpoints receiving traffic"
+    }
+  ],
+  "ports": [
+    { "port": 22, "is_open": false, "service": "ssh" },
+    { "port": 80, "is_open": true, "service": "http", "banner": "Apache/2.4.41" },
+    { "port": 443, "is_open": true, "service": "https", "banner": "Apache/2.4.41" },
+    { "port": 8080, "is_open": true, "service": "http-admin", "banner": "Internal Admin Console v2.1" },
+    { "port": 8443, "is_open": true, "service": "https-auth", "banner": "AuthGateway 1.0" }
+  ],
+  "http": {
+    "reachable": true,
+    "status_code": 200,
+    "headers": {
+      "server": "Apache/2.4.41 (Ubuntu)",
+      "x-powered-by": "PHP/7.4.3",
+      "content-type": "text/html; charset=UTF-8"
+    },
+    "cookies": [
+      {
+        "name": "SESSIONID",
+        "value": "simulated_session_token_xyz987",
+        "secure": true,
+        "httponly": false,
+        "samesite": null
+      }
+    ],
+    "redirects": [],
+    "redirects_to_https": false,
+    "server_header": "Apache/2.4.41 (Ubuntu)",
+    "x_powered_by": "PHP/7.4.3",
+    "has_hsts": false,
+    "has_csp": false,
+    "has_x_content_type_options": false,
+    "has_x_frame_options": false,
+    "has_referrer_policy": false,
+    "has_permissions_policy": false
+  },
+  "tls": {
+    "tls_enabled": true,
+    "cert_valid": true,
+    "issuer": "Let's Encrypt Authority X3",
+    "subject": "acme-demo.local",
+    "expires_in_days": 12,
+    "tls_version": "TLSv1.1",
+    "cipher_suite": "ECDHE-RSA-AES128-SHA",
+    "self_signed": false,
+    "expired": false
+  }
+}
